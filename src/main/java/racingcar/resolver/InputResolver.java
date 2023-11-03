@@ -1,5 +1,7 @@
 package racingcar.resolver;
 
+import static racingcar.exception.ErrorMessage.*;
+
 import camp.nextstep.edu.missionutils.Console;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +29,7 @@ public class InputResolver {
     private static List<String> limitNameSize(List<String> carNameList) {
         for (String carName : carNameList) {
             if (carName.length() > MAX_NAME_LENGTH) {
-                throw new IllegalArgumentException("차의 이름은 5자 이하만 가능하다.");
+                throw new IllegalArgumentException(VALIDATE_LENGTH_FOR_EACH_CAR_NAME.getMessage());
             }
         }
         return carNameList;
@@ -45,7 +47,7 @@ public class InputResolver {
             count = Integer.parseInt(trimInput);
         } catch (Exception e) {
             Console.close();
-            throw new IllegalArgumentException("숫자가 아닌 값을 횟수 값으로 입력할 수 없습니다.");
+            throw new IllegalArgumentException(VALIDATE_DIGIT_FOR_INPUT.getMessage());
         }
         return count;
     }
