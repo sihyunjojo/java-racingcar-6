@@ -1,24 +1,21 @@
 package racingcar.resolver;
 
 import static racingcar.exception.ErrorMessage.*;
+import static racingcar.view.InputView.read;
 
 import camp.nextstep.edu.missionutils.Console;
-import java.util.Arrays;
 import java.util.List;
-import racingcar.view.InputView;
+import racingcar.util.InputUtil;
 
-public class InputResolver {
+public class InputValidator {
 
     private static final int MAX_NAME_LENGTH = 5;
-    private final InputView inputView;
-    public InputResolver(InputView inputView) {
-        this.inputView = inputView;
-    }
 
     public List<String> preprocessCarName() {
-        String carNames = inputView.inputCarNames();
+        String carNames = read();
 
-        List<String> carNameList = Arrays.stream(carNames.split(","))
+        List<String> carNameList = InputUtil.convertInputStringToList(carNames)
+                .stream()
                 .map(String::trim)
                 .distinct()
                 .toList();
@@ -36,7 +33,7 @@ public class InputResolver {
     }
 
     public int preprocessCount() {
-        String count = inputView.inputCount();
+        String count = read();
 
         return stringToInt(count.trim());
     }

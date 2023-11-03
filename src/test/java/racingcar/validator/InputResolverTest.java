@@ -17,7 +17,7 @@ class InputResolverTest {
 
     @BeforeEach
     void beforeSetting(){
-        inputResolver = new InputResolver(new InputView());
+        inputResolver = new InputResolver();
     }
 
     @AfterEach
