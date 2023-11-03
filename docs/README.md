@@ -1,3 +1,9 @@
+## new update 
+outputUtil과 inputUtil보다는 dto로 묶는게 좋을듯
+
+## updated
+error-message enum으로 전역적으로 관리.
+
 ## 기능 목록
 - [ ] 차의 이름을 등록 하는 기능
     - 차의 이름이 5자 이하만 가능하게 걸러주는 기능

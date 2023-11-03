@@ -1,28 +1,31 @@
 package racingcar.controller;
 
+import static racingcar.view.message.SystemMessage.RACE_STATUS;
+import static racingcar.view.message.SystemMessage.RACE_WINNERS;
+
 import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
 import racingcar.domain.Game;
 import racingcar.dto.CarResult;
-import racingcar.resolver.InputResolver;
+import racingcar.util.OutputUtil;
+import racingcar.validator.InputValidator;
 import racingcar.service.GameService;
 import racingcar.view.OutputView;
+import racingcar.view.message.SystemMessage;
 
 public class GameController {
 
     private final GameService gameService;
-    private final OutputView outputView;
-    private final InputResolver inputResolver;
+    private final InputValidator inputValidator;
 
-    public GameController(GameService gameService, OutputView outputView, InputResolver inputResolver) {
+    public GameController(GameService gameService, InputValidator inputValidator) {
         this.gameService = gameService;
-        this.outputView = outputView;
-        this.inputResolver = inputResolver;
+        this.inputValidator = inputValidator;
     }
 
     public void game(){
-        List<String> carNames = inputResolver.preprocessCarName();
-        int count = inputResolver.preprocessCount();
+        List<String> carNames = inputValidator.preprocessCarName();
+        int count = inputValidator.preprocessCount();
         Game game = gameService.settingGame(carNames,count);
 
         racingGame(game);
@@ -32,17 +35,21 @@ public class GameController {
     }
 
     private void racingGame(Game game) {
-        outputView.outputResultString();
+        OutputView.printSystemMessage(RACE_STATUS);
 
         for (int i = 0; i < game.getCount(); i++) {
             List<CarResult> carResults = gameService.startGame(game);
-            outputView.outputGameResult(carResults);
+            List<String> carResultByOutput = OutputUtil.generateCarResultString(carResults);
+
+            OutputView.printMessagesWithBlankLine(carResultByOutput);
         }
     }
 
     private void finishGame(Game game) {
         List<String> winnerCarNameList = gameService.determineWinner(game);
-        outputView.outputGameWinner(winnerCarNameList);
+        String winners = OutputUtil.joinUsingCommaByList(winnerCarNameList);
+
+        OutputView.printMessage(RACE_WINNERS + winners);
         Console.close();
     }
 }

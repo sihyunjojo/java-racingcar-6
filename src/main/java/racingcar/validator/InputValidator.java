@@ -1,7 +1,7 @@
-package racingcar.resolver;
+package racingcar.validator;
 
 import static racingcar.exception.ErrorMessage.*;
-import static racingcar.view.InputView.read;
+import static racingcar.view.InputView.*;
 
 import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
@@ -12,7 +12,7 @@ public class InputValidator {
     private static final int MAX_NAME_LENGTH = 5;
 
     public List<String> preprocessCarName() {
-        String carNames = read();
+        String carNames = inputCarNames();
 
         List<String> carNameList = InputUtil.convertInputStringToList(carNames)
                 .stream()
@@ -33,7 +33,7 @@ public class InputValidator {
     }
 
     public int preprocessCount() {
-        String count = read();
+        String count = inputCount();
 
         return stringToInt(count.trim());
     }

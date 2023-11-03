@@ -1,4 +1,4 @@
-package racingcar.resolver;
+package racingcar.validator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,17 +7,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
-import racingcar.view.InputView;
-
 
 
 class InputResolverTest {
 
-    private InputResolver inputResolver;
+    private InputValidator inputValidator;
 
     @BeforeEach
     void beforeSetting(){
-        inputResolver = new InputResolver();
+        inputValidator = new InputValidator();
     }
 
     @AfterEach
@@ -33,7 +31,7 @@ class InputResolverTest {
         setSystemIn(input);
 
         // 예외 검증
-        assertThrows(IllegalArgumentException.class, inputResolver::preprocessCarName);
+        assertThrows(IllegalArgumentException.class, inputValidator::preprocessCarName);
     }
     @Test
     @DisplayName("숫자가 아닌 값이 들어가면 IllegalArgumentException를 일으킨다.")
@@ -43,7 +41,7 @@ class InputResolverTest {
         setSystemIn(input);
 
         // 예외 검증
-        assertThrows(IllegalArgumentException.class, inputResolver::preprocessCount);
+        assertThrows(IllegalArgumentException.class, inputValidator::preprocessCount);
     }
 
     private void setSystemIn(String input) {
